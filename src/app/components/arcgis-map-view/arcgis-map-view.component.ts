@@ -3,6 +3,7 @@ import { defineCustomElements } from '@arcgis/map-components/dist/loader';
 import ArcGisMap from '@arcgis/core/Map';
 import { ComponentLibraryModule } from '@arcgis/map-components-angular';
 import { ArcGisMapService } from '../../services/ArcGISMapService/arc-gis-map.service';
+import MapView from '@arcgis/core/views/MapView';
 
 @Component({
   selector: 'app-arcgis-map-view',
@@ -12,7 +13,9 @@ import { ArcGisMapService } from '../../services/ArcGISMapService/arc-gis-map.se
   styleUrl: './arcgis-map-view.component.scss',
 })
 export class ArcgisMapViewComponent implements OnInit {
-  private _arcGisMapService = inject(ArcGisMapService);
+  private _mapService = inject(ArcGisMapService);
+
+  constructor() {}
 
   ngOnInit(): void {
     defineCustomElements(window, {
@@ -22,6 +25,7 @@ export class ArcgisMapViewComponent implements OnInit {
 
   arcgisViewReadyChange(event: any) {
     const map = event.target.map as ArcGisMap;
-    this._arcGisMapService.map = map;
+    const view = event.target.view as MapView;
+    this._mapService.setMapProperties(map, view);
   }
 }

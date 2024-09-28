@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-card-content>
+    <h4>{{ title }}</h4>
+    <h5>Count</h5>
+    <h2>{{ count }}</h2>
+    <div class="buttons-wrapper">
+      <button mat-raised-button color="primary" (click)="onFillToMapClick()">
+        Fill To Map
+      </button>
+      <button mat-raised-button color="accent" (click)="onExportCSVClick()">
+        Export to CSV
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
