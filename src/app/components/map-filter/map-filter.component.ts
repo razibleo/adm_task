@@ -10,6 +10,7 @@ import { IFirstAdminBoudary } from '../../shared/models/FirstAdminBoundary.model
 import { ISecondAdminBoundary } from '../../shared/models/SecondAdminBoundary.model';
 import { IThirdAdminBoundary } from '../../shared/models/ThridAdminBoundary.model';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { ArcGisMapService } from '../../services/ArcGISMapService/arc-gis-map.service';
 
@@ -26,6 +27,7 @@ type Option = {
     NgMultiSelectDropDownModule,
     FormsModule,
     MatButtonModule,
+    MatCardModule,
   ],
   templateUrl: './map-filter.component.html',
   styleUrl: './map-filter.component.scss',

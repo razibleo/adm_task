@@ -1,46 +1,58 @@
-<ng-multiselect-dropdown
-  [placeholder]="'Select 1st Administrative Boundaries'"
-  [settings]="dropdownSettings"
-  [data]="firstAdminBoundariesOptions"
-  [disabled]="firstAdminBoundariesOptions.length <= 0"
-  [(ngModel)]="selectedFirstAdminBoundaries"
-  (ngModelChange)="onFirstAdminBoundaryFilterChange()"
->
-</ng-multiselect-dropdown>
+<mat-card>
+  <mat-card-content>
+    <div class="dropdown-wrapper">
+      <h3 class="dropdown-title">1st Administrative Boundaries:</h3>
+      <ng-multiselect-dropdown
+        placeholder="Please select an option"
+        [settings]="dropdownSettings"
+        [data]="firstAdminBoundariesOptions"
+        [disabled]="firstAdminBoundariesOptions.length <= 0"
+        [(ngModel)]="selectedFirstAdminBoundaries"
+        (ngModelChange)="onFirstAdminBoundaryFilterChange()"
+      />
+    </div>
+    <div class="dropdown-wrapper">
+      <h3 class="dropdown-title">2nd Administrative Boundaries:</h3>
+      <ng-multiselect-dropdown
+        placeholder="Please select an option"
+        [settings]="dropdownSettings"
+        [data]="secondAdminBoundariesOptions"
+        [disabled]="secondAdminBoundariesOptions.length <= 0"
+        [(ngModel)]="selectedSecondAdminBoundaries"
+        (ngModelChange)="onSecondAdminBoundaryFilterChange()"
+      />
+    </div>
+    <div class="dropdown-wrapper">
+      <h3 class="dropdown-title">3rd Administrative Boundaries:</h3>
+      <ng-multiselect-dropdown
+        placeholder="Please select an option"
+        [settings]="dropdownSettings"
+        [data]="thirdAdminBoundariesOptions"
+        [disabled]="thirdAdminBoundariesOptions.length <= 0"
+        [(ngModel)]="selectedThirdBoundariesOptions"
+      />
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <button
+      mat-flat-button
+      type="button"
+      (click)="applyFilter()"
+      [disabled]="isloading"
+      color="primary"
+    >
+      submit
+    </button>
+    <button
+      mat-flat-button
+      type="button"
+      (click)="resetFilter()"
+      [disabled]="isloading"
+      color="warn"
+    >
+      reset
+    </button>
+  </mat-card-footer>
+</mat-card>
 
-<ng-multiselect-dropdown
-  [placeholder]="'Select 2nd Administrative Boundaries'"
-  [settings]="dropdownSettings"
-  [data]="secondAdminBoundariesOptions"
-  [disabled]="secondAdminBoundariesOptions.length <= 0"
-  [(ngModel)]="selectedSecondAdminBoundaries"
-  (ngModelChange)="onSecondAdminBoundaryFilterChange()"
->
-</ng-multiselect-dropdown>
-
-<ng-multiselect-dropdown
-  [placeholder]="'Select 3rd Administrative Boundaries'"
-  [settings]="dropdownSettings"
-  [data]="thirdAdminBoundariesOptions"
-  [disabled]="thirdAdminBoundariesOptions.length <= 0"
-  [(ngModel)]="selectedThirdBoundariesOptions"
->
-</ng-multiselect-dropdown>
-
-<button
-  mat-flat-button
-  type="button"
-  (click)="applyFilter()"
-  [disabled]="isloading"
->
-  submit
-</button>
-<button
-  mat-flat-button
-  type="button"
-  (click)="resetFilter()"
-  [disabled]="isloading"
->
-  reset
-</button>
 <!-- <p>{{ firstAdminBoundaries | async | json }}</p> -->
