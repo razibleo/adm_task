@@ -1,0 +1,32 @@
+<ng-multiselect-dropdown
+  [placeholder]="'Select 1st Administrative Boundaries'"
+  [settings]="dropdownSettings"
+  [data]="firstAdminBoundariesOptions"
+  [disabled]="firstAdminBoundariesOptions.length <= 0"
+  [(ngModel)]="selectedFirstAdminBoundaries"
+  (ngModelChange)="onFirstAdminBoundaryFilterChange()"
+>
+</ng-multiselect-dropdown>
+
+<ng-multiselect-dropdown
+  [placeholder]="'Select 2nd Administrative Boundaries'"
+  [settings]="dropdownSettings"
+  [data]="secondAdminBoundariesOptions"
+  [disabled]="secondAdminBoundariesOptions.length <= 0"
+  [(ngModel)]="selectedSecondAdminBoundaries"
+  (ngModelChange)="onSecondAdminBoundaryFilterChange()"
+>
+</ng-multiselect-dropdown>
+
+<ng-multiselect-dropdown
+  [placeholder]="'Select 3rd Administrative Boundaries'"
+  [settings]="dropdownSettings"
+  [data]="thirdAdminBoundariesOptions"
+  [disabled]="thirdAdminBoundariesOptions.length <= 0"
+  [(ngModel)]="selectedThirdBoundariesOptions"
+>
+</ng-multiselect-dropdown>
+
+<button mat-flat-button type="button" (click)="applyFilter()">submit</button>
+<button mat-flat-button type="button" (click)="resetFilter()">reset</button>
+<!-- <p>{{ firstAdminBoundaries | async | json }}</p> -->
