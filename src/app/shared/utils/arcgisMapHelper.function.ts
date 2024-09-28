@@ -41,7 +41,7 @@ export const displayResults = (
 };
 
 export const computeExtentFromFeatures = (features: any) => {
-  return features.reduce((acc: any, feature: any) => {
+  return features?.reduce((acc: any, feature: any) => {
     return acc.union(feature.geometry.extent);
   }, features[0]?.geometry.extent);
 };

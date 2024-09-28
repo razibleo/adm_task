@@ -154,7 +154,8 @@ export class ArcGisMapService implements OnDestroy {
     const extent = computeExtentFromFeatures(
       results.flatMap((e) => e?.features || [])
     );
-    this._mapView?.goTo({
+
+    await this._mapView?.goTo({
       target: extent,
     });
 

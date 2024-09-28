@@ -1,12 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@include mat.core();
 @import url("https://js.arcgis.com/4.30/@arcgis/core/assets/esri/themes/light/main.css");
+
+$custom-primary: mat.define-palette(mat.$grey-palette, 800, 500, 900);
+$custom-accent: mat.define-palette(mat.$green-palette, 800, 500, 900);
+
+$custom-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $custom-primary,
+      accent: $custom-accent,
+    ),
+  )
+);
+
 body,
 html {
+  @include mat.core-theme($custom-theme);
+  @include mat.button-theme($custom-theme);
+
   padding: 0;
   margin: 0;
   width: 100%;
   height: 100%;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

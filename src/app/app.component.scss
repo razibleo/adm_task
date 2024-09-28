@@ -3,10 +3,24 @@
   height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+.app-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  padding: 0 1em;
+  top: 0;
+  background-color: white;
+  z-index: 10;
+  box-shadow: 0px -5px 20px 0px #888888;
 }
 
 .logo {
-  width: 150px;
+  width: 200px;
 }
 
 .inner-wrapper {
@@ -16,10 +30,25 @@
 }
 
 .left {
+  min-width: 150px;
+  max-width: 350px;
 }
 .middle {
   flex: 1;
-  width: 100%;
+  min-height: 400px;
 }
 .right {
+  max-width: 350px;
+}
+
+@media screen and (max-width: 1000px) {
+  .inner-wrapper {
+    flex-direction: column;
+  }
+  .left,
+  .middle,
+  .right {
+    flex: 1;
+    max-width: unset;
+  }
 }
