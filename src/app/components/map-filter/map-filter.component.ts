@@ -31,12 +31,13 @@ type Option = {
   styleUrl: './map-filter.component.scss',
 })
 export class MapFilterComponent {
-  private _arcgisApiService = inject(ArcgisApiService);
-  private _arcgisMapService = inject(ArcGisMapService);
+  private _apiService = inject(ArcgisApiService);
+  private _mapService = inject(ArcGisMapService);
 
   private _firstAdminBoundaries: IFirstAdminBoudary[] = [];
   private _secondAdminBoundaries: ISecondAdminBoundary[] = [];
   private _thirdAdminBoundaries: IThirdAdminBoundary[] = [];
+  isloading = this._mapService.isLoading;
 
   firstAdminBoundariesOptions: Option[] = [];
   selectedFirstAdminBoundaries: Option[] = [];
@@ -57,9 +58,9 @@ export class MapFilterComponent {
 
   constructor() {
     combineLatest([
-      this._arcgisApiService.getFirstAdminBoundaries(),
-      this._arcgisApiService.getSecondAdminBoundaries(),
-      this._arcgisApiService.getThridAdminBoundaries(),
+      this._apiService.getFirstAdminBoundaries(),
+      this._apiService.getSecondAdminBoundaries(),
+      this._apiService.getThridAdminBoundaries(),
     ])
       // .pipe(take(1))
       .subscribe(
@@ -126,12 +127,12 @@ export class MapFilterComponent {
 
     const filteredThridAdminBoundaries = this._thirdAdminBoundaries.filter(
       (e) =>
-        this.thirdAdminBoundariesOptions.find(
+        this.selectedThirdBoundariesOptions.find(
           (selected) => selected.id === e.OBJECTID.toString()
         )
     );
 
-    this._arcgisMapService.applyFilters({
+    this._mapService.applyFilters({
       firstAdminBoundarires: filteredFirstAdminBoundaries,
       secondAdminBoundarires: filteredSecondAdminBoundaries,
       thirdAdminBoundarires: filteredThridAdminBoundaries,
@@ -143,6 +144,6 @@ export class MapFilterComponent {
     this.selectedThirdBoundariesOptions = [];
 
     this._setFirstAdminBoundariesOptions();
-    this._arcgisMapService.applyFilters({});
+    this._mapService.applyFilters({});
   }
 }

@@ -27,6 +27,20 @@
 >
 </ng-multiselect-dropdown>
 
-<button mat-flat-button type="button" (click)="applyFilter()">submit</button>
-<button mat-flat-button type="button" (click)="resetFilter()">reset</button>
+<button
+  mat-flat-button
+  type="button"
+  (click)="applyFilter()"
+  [disabled]="isloading"
+>
+  submit
+</button>
+<button
+  mat-flat-button
+  type="button"
+  (click)="resetFilter()"
+  [disabled]="isloading"
+>
+  reset
+</button>
 <!-- <p>{{ firstAdminBoundaries | async | json }}</p> -->

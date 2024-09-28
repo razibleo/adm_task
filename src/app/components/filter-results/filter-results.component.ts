@@ -4,6 +4,7 @@ import { ArcGisMapService } from '../../services/ArcGISMapService/arc-gis-map.se
 import { Subscription } from 'rxjs';
 import { IFeatureResults } from '../../shared/models/FeatureResults.model';
 import { computeExtentFromFeatures } from '../../shared/utils/arcgisMapHelper.function';
+import { CsvService } from '../../services/CSVSerivce/csv.service';
 
 @Component({
   selector: 'app-filter-results',
@@ -14,6 +15,7 @@ import { computeExtentFromFeatures } from '../../shared/utils/arcgisMapHelper.fu
 })
 export class FilterResultsComponent implements OnDestroy {
   _mapService = inject(ArcGisMapService);
+  _csvService = inject(CsvService);
   _featureResultsSubscription: Subscription;
   results: IFeatureResults = {};
 
@@ -33,6 +35,18 @@ export class FilterResultsComponent implements OnDestroy {
 
     const extent = extentFeaturesMap[adminBoundaryNumber];
     this._mapService.moveViewToTarget(extent);
+  }
+
+  onExportCSV(adminBoundaryNumber: 1 | 2 | 3) {
+    const featuresMap = {
+      1: this.results.firstAdminFeatures,
+      2: this.results.secondAdminFeatures,
+      3: this.results.thirdAdminFeatures,
+    };
+    console.log({ xxx: featuresMap[adminBoundaryNumber]! });
+    this._csvService.generateCSV(
+      featuresMap[adminBoundaryNumber]!.map((e) => e.attributes)
+    );
   }
   ngOnDestroy(): void {
     this._featureResultsSubscription.unsubscribe();

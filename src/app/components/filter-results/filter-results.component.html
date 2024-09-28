@@ -3,15 +3,18 @@
     title="1st Admin Boundary Results"
     [count]="results.firstAdminFeatures?.length ?? 0"
     (onFillToMap)="onFillToMap(1)"
+    (onExportCSV)="onExportCSV(1)"
   />
   <app-filter-results-card
     title="2nd Admin Boundary Results"
     [count]="results.secondAdminFeatures?.length ?? 0"
     (onFillToMap)="onFillToMap(2)"
+    (onExportCSV)="onExportCSV(2)"
   />
   <app-filter-results-card
     title="3rd Admin Boundary Results"
     [count]="results.thirdAdminFeatures?.length ?? 0"
     (onFillToMap)="onFillToMap(3)"
+    (onExportCSV)="onExportCSV(3)"
   />
 </div>
