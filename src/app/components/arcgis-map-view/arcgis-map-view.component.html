@@ -1,0 +1,14 @@
+<arcgis-map
+  class="map"
+  itemid="arcgis/outdoor"
+  zoom="3"
+  (arcgisViewReadyChange)="arcgisViewReadyChange($event)"
+>
+  <!-- <arcgis-basemap-gallery /> -->
+  <arcgis-layer-list position="top-right" />
+  <arcgis-expand>
+    <arcgis-search position="top-left" />
+  </arcgis-expand>
+
+  <arcgis-legend position="bottom-left" />
+</arcgis-map>
