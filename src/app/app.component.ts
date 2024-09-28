@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { ArcgisMapViewComponent } from './components/arcgis-map-view/arcgis-map-view.component';
+import { MapFilterComponent } from './components/map-filter/map-filter.component';
+import { FilterResultsComponent } from './components/filter-results/filter-results.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [
+    RouterOutlet,
+    ArcgisMapViewComponent,
+    MapFilterComponent,
+    FilterResultsComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'adm_task';
