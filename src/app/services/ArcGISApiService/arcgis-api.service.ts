@@ -14,7 +14,6 @@ export class ArcgisApiService {
   private defaultParams = {
     f: 'json',
     where: `(validity = 'yes') AND (1=1)`,
-
     returnGeometry: false,
     orderByFields: 'OBJECTID ASC',
     outFields: '*',
@@ -36,7 +35,9 @@ export class ArcgisApiService {
   }
   getSecondAdminBoundaries() {
     return this.http
-      .get<any>(`${this.apiUrl}/1/query`)
+      .get<any>(`${this.apiUrl}/1/query`, {
+        params: { ...this.defaultParams },
+      })
       .pipe(
         map((e) =>
           (e.features as any[]).map((e) => e.attributes as ISecondAdminBoundary)
@@ -44,11 +45,14 @@ export class ArcgisApiService {
       );
   }
   getThridAdminBoundaries() {
-    return this.http.get<any>(`${this.apiUrl}/0/query`).pipe(
-      map((e) => e.features),
-      map((e) =>
-        (e.features as any[]).map((e) => e.attributes as IThirdAdminBoundary)
-      )
-    );
+    return this.http
+      .get<any>(`${this.apiUrl}/0/query`, {
+        params: { ...this.defaultParams },
+      })
+      .pipe(
+        map((e) =>
+          (e.features as any[]).map((e) => e.attributes as IThirdAdminBoundary)
+        )
+      );
   }
 }
