@@ -61,19 +61,19 @@ export class MapFilterComponent {
   constructor() {
     combineLatest([
       this._apiService.getFirstAdminBoundaries(),
-      this._apiService.getSecondAdminBoundaries(),
-      this._apiService.getThridAdminBoundaries(),
+      // this._apiService.getSecondAdminBoundaries(),
+      // this._apiService.getThridAdminBoundaries(),
     ])
       // .pipe(take(1))
       .subscribe(
         ([
           firstAdminBoundaries,
-          secondAdminBoundaries,
-          thridAdminBoundaries,
+          // secondAdminBoundaries,
+          // thridAdminBoundaries,
         ]) => {
           this._firstAdminBoundaries = firstAdminBoundaries;
-          this._secondAdminBoundaries = secondAdminBoundaries;
-          this._thirdAdminBoundaries = thridAdminBoundaries;
+          // this._secondAdminBoundaries = secondAdminBoundaries;
+          // this._thirdAdminBoundaries = thridAdminBoundaries;
           this._setFirstAdminBoundariesOptions();
         }
       );
@@ -106,10 +106,43 @@ export class MapFilterComponent {
   }
 
   onFirstAdminBoundaryFilterChange() {
-    this._setSecondAdminBoundariesOptions();
+    const hasFilters = this.selectedFirstAdminBoundaries.length > 0;
+    console.log('hasFilters', hasFilters);
+
+    if (!hasFilters) {
+      this._resetSecondAdminBoundaryFilter();
+
+      return;
+    }
+
+    this._apiService
+      .getSecondAdminBoundaries(
+        this.selectedFirstAdminBoundaries.map((e) => e.label)
+      )
+      .pipe(take(1))
+      .subscribe((e) => {
+        this._secondAdminBoundaries = e;
+        this._setSecondAdminBoundariesOptions();
+      });
   }
   onSecondAdminBoundaryFilterChange() {
-    this._setThirdAdminBoundariesOptions();
+    const hasFilters = this.selectedSecondAdminBoundaries.length > 0;
+
+    if (!hasFilters) {
+      this._resetThridAdminBoundaryFilter();
+      return;
+    }
+
+    this._apiService
+      .getThridAdminBoundaries(
+        this.selectedFirstAdminBoundaries.map((e) => e.label),
+        this.selectedSecondAdminBoundaries.map((e) => e.label)
+      )
+      .pipe(take(1))
+      .subscribe((e) => {
+        this._thirdAdminBoundaries = e;
+        this._setThirdAdminBoundariesOptions();
+      });
   }
 
   applyFilter() {
@@ -140,12 +173,26 @@ export class MapFilterComponent {
       thirdAdminBoundarires: filteredThridAdminBoundaries,
     });
   }
-  resetFilter() {
-    this.selectedFirstAdminBoundaries = [];
-    this.selectedSecondAdminBoundaries = [];
-    this.selectedThirdBoundariesOptions = [];
 
-    this._setFirstAdminBoundariesOptions();
+  private _resetFirstAdminBoundaryFilter() {
+    this._firstAdminBoundaries = [];
+    this.selectedFirstAdminBoundaries = [];
+    this.firstAdminBoundariesOptions = [];
+    this._resetSecondAdminBoundaryFilter();
+  }
+  private _resetSecondAdminBoundaryFilter() {
+    this._secondAdminBoundaries = [];
+    this.secondAdminBoundariesOptions = [];
+    this.selectedSecondAdminBoundaries = [];
+    this._resetThridAdminBoundaryFilter();
+  }
+  private _resetThridAdminBoundaryFilter() {
+    this._thirdAdminBoundaries = [];
+    this.thirdAdminBoundariesOptions = [];
+    this.selectedThirdBoundariesOptions = [];
+  }
+  resetFilter() {
+    this._resetFirstAdminBoundaryFilter();
     this._mapService.applyFilters({});
   }
 }

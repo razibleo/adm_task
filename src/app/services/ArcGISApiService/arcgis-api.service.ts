@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { IFirstAdminBoudary } from '../../shared/models/FirstAdminBoundary.model';
 import { ISecondAdminBoundary } from '../../shared/models/SecondAdminBoundary.model';
 import { IThirdAdminBoundary } from '../../shared/models/ThridAdminBoundary.model';
+import { generateWhereInStatment } from '../../shared/utils/arcgisMapHelper.function';
 
 @Injectable({
   providedIn: 'root',
@@ -33,10 +34,16 @@ export class ArcgisApiService {
         )
       );
   }
-  getSecondAdminBoundaries() {
+  getSecondAdminBoundaries(adm0_names: string[]) {
     return this.http
       .get<any>(`${this.apiUrl}/1/query`, {
-        params: { ...this.defaultParams },
+        params: {
+          ...this.defaultParams,
+          where: `${this.defaultParams.where} AND (${generateWhereInStatment(
+            'adm0_name',
+            adm0_names
+          )})`,
+        },
       })
       .pipe(
         map((e) =>
@@ -44,10 +51,16 @@ export class ArcgisApiService {
         )
       );
   }
-  getThridAdminBoundaries() {
+  getThridAdminBoundaries(adm0_names: string[], adm1_names: string[]) {
     return this.http
       .get<any>(`${this.apiUrl}/0/query`, {
-        params: { ...this.defaultParams },
+        params: {
+          ...this.defaultParams,
+          where: `${this.defaultParams.where} AND (${generateWhereInStatment(
+            'adm0_name',
+            adm0_names
+          )}) AND (${generateWhereInStatment('adm1_name', adm1_names)})`,
+        },
       })
       .pipe(
         map((e) =>
