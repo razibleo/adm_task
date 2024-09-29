@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ArcgisApiService } from '../../services/ArcGISApiService/arcgis-api.service';
 import {
@@ -32,7 +32,7 @@ type Option = {
   templateUrl: './map-filter.component.html',
   styleUrl: './map-filter.component.scss',
 })
-export class MapFilterComponent {
+export class MapFilterComponent implements OnInit {
   private _apiService = inject(ArcgisApiService);
   private _mapService = inject(ArcGisMapService);
 
@@ -58,25 +58,18 @@ export class MapFilterComponent {
     allowSearchFilter: true,
   };
 
-  constructor() {
-    combineLatest([
-      this._apiService.getFirstAdminBoundaries(),
-      // this._apiService.getSecondAdminBoundaries(),
-      // this._apiService.getThridAdminBoundaries(),
-    ])
-      // .pipe(take(1))
-      .subscribe(
-        ([
-          firstAdminBoundaries,
-          // secondAdminBoundaries,
-          // thridAdminBoundaries,
-        ]) => {
-          this._firstAdminBoundaries = firstAdminBoundaries;
-          // this._secondAdminBoundaries = secondAdminBoundaries;
-          // this._thirdAdminBoundaries = thridAdminBoundaries;
-          this._setFirstAdminBoundariesOptions();
-        }
-      );
+  ngOnInit(): void {
+    this._getAllFirstAdminBoundaries();
+  }
+
+  private _getAllFirstAdminBoundaries() {
+    this._apiService
+      .getFirstAdminBoundaries()
+      .pipe(take(1))
+      .subscribe((firstAdminBoundaries) => {
+        this._firstAdminBoundaries = firstAdminBoundaries;
+        this._setFirstAdminBoundariesOptions();
+      });
   }
 
   private _setFirstAdminBoundariesOptions() {
@@ -194,5 +187,6 @@ export class MapFilterComponent {
   resetFilter() {
     this._resetFirstAdminBoundaryFilter();
     this._mapService.applyFilters({});
+    this._getAllFirstAdminBoundaries();
   }
 }
