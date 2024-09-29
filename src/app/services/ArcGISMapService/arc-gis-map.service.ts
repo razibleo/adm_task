@@ -11,9 +11,12 @@ import {
   computeExtentFromFeatures,
   displayResults,
   generateWhereInStatment,
+  loadImage,
 } from '../../shared/utils/arcgisMapHelper.function';
 import { IFeatureResults } from '../../shared/models/FeatureResults.model';
-
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 @Injectable({
   providedIn: 'root',
 })
@@ -40,7 +43,6 @@ export class ArcGisMapService implements OnDestroy {
   private _defaultFeatureLayers = this._defaultConfigFeatureLayers.map(
     (config) => new FeatureLayer(config)
   );
-  private _featureResults: IFeatureResults = {};
   private _featureResultsSubject = new BehaviorSubject<IFeatureResults>({});
   private _isLoading = false;
 
@@ -172,6 +174,11 @@ export class ArcGisMapService implements OnDestroy {
     this._mapView?.goTo({
       target: extent,
     });
+  }
+
+  async getViewAsImage() {
+    const screenshot = await this._mapView!.takeScreenshot({ format: 'png' });
+    return loadImage(screenshot.dataUrl);
   }
 
   ngOnDestroy(): void {
