@@ -43,7 +43,6 @@ export class FilterResultsComponent implements OnDestroy {
       2: this.results.secondAdminFeatures,
       3: this.results.thirdAdminFeatures,
     };
-    console.log({ xxx: featuresMap[adminBoundaryNumber]! });
     this._csvService.generateCSV(
       featuresMap[adminBoundaryNumber]!.map((e) => e.attributes)
     );

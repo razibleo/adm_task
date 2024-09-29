@@ -26,7 +26,6 @@ export class ArcgisMapViewComponent implements OnInit {
   arcgisViewReadyChange(event: any) {
     const map = event.target.map as ArcGisMap;
     const view = event.target.view as MapView;
-    console.log({ map, view });
     this._mapService.setMapProperties(map, view);
   }
 }

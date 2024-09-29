@@ -12,6 +12,8 @@ import { Subscription } from 'rxjs';
 import { IFirstAdminBoudary } from './shared/models/FirstAdminBoundary.model';
 import { ISecondAdminBoundary } from './shared/models/SecondAdminBoundary.model';
 import { IThirdAdminBoundary } from './shared/models/ThridAdminBoundary.model';
+import { computeExtentFromFeatures } from './shared/utils/arcgisMapHelper.function';
+import { sleep } from './shared/utils/sleep.function';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +44,11 @@ export class AppComponent implements OnDestroy {
   }
 
   async exportToPDF() {
+    const extent = computeExtentFromFeatures(
+      Object.values(this._featureResults).flatMap((e) => e || [])
+    );
+    await this._mapService.moveViewToTarget(extent);
+    await sleep(1000);
     const img = await this._mapService.getViewAsImage();
     const imageAspectRatio = img.width / img.height;
     const { pdfWidth, horizontalPageMargin } =

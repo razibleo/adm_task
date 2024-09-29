@@ -170,8 +170,8 @@ export class ArcGisMapService implements OnDestroy {
     });
   }
 
-  moveViewToTarget(extent: any[]) {
-    this._mapView?.goTo({
+  moveViewToTarget(extent: any) {
+    return this._mapView?.goTo({
       target: extent,
     });
   }
